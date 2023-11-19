@@ -4,16 +4,14 @@ import AdminHomeSideMenu from '../components/AdminHomeSideMenu'
 import Navbar from '../components/Navbar'
 import Table from '../components/Table'
 
-const AdminHome = () => {
+const ProductsHome = () => {
   return (
-
     <Container 
     Menubar={<AdminHomeSideMenu></AdminHomeSideMenu>} 
-    Navbar = {<Navbar page="Category"></Navbar>}
-    Section = {<Table page="Categories"></Table>}
-    
+    Navbar = {<Navbar page="Product"></Navbar>}
+    Section = {<Table page="Product"></Table>}
     />
-    )
-  }
-  
-  export default AdminHome
+  )
+}
+
+export default ProductsHome

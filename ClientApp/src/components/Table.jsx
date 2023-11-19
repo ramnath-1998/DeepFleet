@@ -1,13 +1,15 @@
 import React from 'react'
-import TableComponent from './TableComponent'
+import TableComponentCategories from './TableComponentCategories'
+import TableComponentProducts from './TableComponentProducts'
 
-const Table = () => {
-  return (
-    <div className="flex w-[60%] mt-[5%] items-center">
-
-        <TableComponent></TableComponent>
-    </div>
-  )
+function Table(props) {
+  const item = props.page
+  if(item  === "Categories") {
+    return (<div className="flex w-[70%] mt-[10%] items-center">
+      <TableComponentCategories />
+    </div>)
+  }
+  return (<div className="flex w-[70%] mt-[10%] items-center"><TableComponentProducts></TableComponentProducts></div>)
 }
 
 export default Table

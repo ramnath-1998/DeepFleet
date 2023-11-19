@@ -2,12 +2,11 @@ import React from 'react'
 
 function Container(props){
   return (
-    <div className="flex w-full justify-center items-center">
+    <div className="flex w-full justify-center items-start">
       
      {props.Navbar}
      {props.Menubar}
-     {props.Table}
-
+     {props.Section}
     </div>
   )
 }

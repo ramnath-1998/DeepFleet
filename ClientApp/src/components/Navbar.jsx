@@ -1,17 +1,144 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import axios from 'axios';
+import Table from './Table';
 
-const Navbar = () => {
+function Navbar(props) {
+  const url = "/api/categories";
+  const [categories, setCategories] = useState([]);
+  const [itemCategory, setItemCategory] = useState({ categoryName: '', categoryTax: "" })
+  const [itemProduct, setItemProduct] = useState({ productName: '', rate: "", categoryIdentifier:"", categoryName:"", categoryTax:0} )
+
+  const fetchCategories = () => {
+    return axios.get(url).then((res) => setCategories(res.data));
+  };
+
+
+  const  handleSelectProductCategory = (event) => {
+
+    const categoryInput = event.currentTarget.getAttribute('category-data');
+    const categoryInputJson = JSON.parse(categoryInput)
+    setItemProduct(prevItem => ({...prevItem, categoryName:categoryInputJson.categoryName, categoryTax:categoryInputJson.categoryTax, categoryIdentifier: categoryInputJson.categoryIdentifier}))
+
+  
+  };
+
+  const dropdown = categories && categories.map((category, index) => (
+    <li key={index} onClick={handleSelectProductCategory} category-data={JSON.stringify(category)}><a>{category.categoryName}</a></li>
+  ));
+
+
+  const displayPopup = (event) => {
+
+    const popupName = props.page
+    console.log(popupName)
+    if (popupName === "Category") {
+      document.getElementById('add_category_model').showModal();
+    }
+    if (popupName === "Product") {
+      document.getElementById('add_product_model').showModal();
+    }
+
+  };
+
+  const handleSubmitCategories = (event) => {
+
+    console.log(itemCategory, "item")
+    event.preventDefault();
+    return axios.post(url, {
+      categoryName: itemCategory.categoryName,
+      categoryTax: parseInt(itemCategory.categoryTax)
+    }).then(response => {
+      console.log('Deleted successfully', response);
+      setItemCategory(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
+      document.getElementById('add_category_model').close();
+      fetchCategories();
+    });
+
+
+  };
+
+  const handleSubmitProduct = (event) => {
+
+  };
+
   return (
-      <div className="fixed w-[80%] justify-center items-center top-5">
-        <div className="flex w-[80%]  navbar bg-base-100">
+    <>
+      <div className="fixed w-[90%] items-center top-5">
+        <div className="flex w-full justify-between  navbar bg-base-100">
           <div className="navbar-start">
             <a className="btn btn-ghost text-xl">Admin Dashboard</a>
           </div>
           <div className="navbar-end">
-            <a className="btn">Switch to User Account</a>
+            <button onClick={displayPopup} className="btn">Add {props.page}</button>
+          </div>
+          <div className="navbar-end">
+            <a href="/user" className="btn">Switch to User Account</a>
           </div>
         </div>
       </div>
+      <dialog id="add_category_model" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Add new Category</h3>
+          {itemCategory && (
+            <input
+              type="text"
+              placeholder="Category Name"
+              value={itemCategory.categoryName}
+              onChange={(e) => setItemCategory(prevItem => ({ ...prevItem, categoryName: e.target.value }))}
+              className="input w-full max-w-xs mt-5"
+            />
+
+          )}
+          {itemCategory && (
+            <input type="text" placeholder="Category Tax Percentage"
+              value={itemCategory.categoryTax}
+              onChange={e => setItemCategory(prevItem => ({ ...prevItem, categoryTax: e.target.value }))}
+              className="input w-full max-w-xs mt-5" />
+
+          )}
+          <div className="modal-action">
+            <input type='submit' onClick={handleSubmitCategories} className="btn" placeholder="Save" />
+            <button className="btn" onClick={() => document.getElementById('add_category_model').close()}>Close</button>
+          </div>
+
+        </div>
+      </dialog>
+      <dialog id="add_product_model" className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Add new product</h3>
+          <form onSubmit={handleSubmitProduct}>
+            <input
+              type="text"
+              placeholder="Product Name"
+              value={itemProduct.productName}
+              onChange={(e) => setItemProduct(prevItem => ({ ...prevItem, productName: e.target.value }))}
+              className="input w-full max-w-xs mt-5"
+            />
+            <input
+              type="text"
+              placeholder="Rate"
+              value={itemProduct.rate}
+              onChange={(e) => setItemProduct(prevItem => ({ ...prevItem, rate: e.target.value }))}
+              className="input w-full max-w-xs mt-5"
+            />
+
+            <details className="flex dropdown">
+              <summary className="m-1 btn mt-[10%]">Select the category</summary>
+              <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+
+                {dropdown}
+
+              </ul>
+            </details>
+
+            <div className="modal-action">
+              <input type='submit' className="btn" placeholder="Save" />
+              <button className="btn" onClick={() => document.getElementById('add_category_model').close()}>Close</button>
+            </div>
+          </form>
+        </div>
+      </dialog>
+    </>
   )
 }
 
