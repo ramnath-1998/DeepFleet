@@ -31,10 +31,10 @@ function Navbar(props) {
 
     const popupName = props.page
     console.log(popupName)
-    if (popupName === "Category") {
+    if (popupName === "Categories") {
       document.getElementById('add_category_model').showModal();
     }
-    if (popupName === "Product") {
+    if (popupName === "Products") {
       document.getElementById('add_product_model').showModal();
     }
 

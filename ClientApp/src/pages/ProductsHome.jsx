@@ -8,8 +8,8 @@ const ProductsHome = () => {
   return (
     <Container 
     Menubar={<AdminHomeSideMenu></AdminHomeSideMenu>} 
-    Navbar = {<Navbar page="Product"></Navbar>}
-    Section = {<Table page="Product"></Table>}
+    Navbar = {<Navbar page="Products"></Navbar>}
+    Section = {<Table page="Products"></Table>}
     />
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios';
+import MainTable from './MainTable';
 
 const TableComponentProducts = () => {
 
@@ -21,15 +22,16 @@ const TableComponentProducts = () => {
   };
 
   useEffect(() => {
+    fetchProducts();
     fetchCategories();
   }, []);
 
 
-  const  handleSelectProductCategory = (event) => {
+  const handleSelectProductCategory = (event) => {
 
     const categoryInput = event.currentTarget.getAttribute('category-data');
     const categoryInputJson = JSON.parse(categoryInput)
-    setItem(prevItem => ({...prevItem, categoryName:categoryInputJson.categoryName, categoryTax:categoryInputJson.categoryTax, categoryIdentifier: categoryInputJson.categoryIdentifier}))
+    setItem(prevItem => ({ ...prevItem, categoryName: categoryInputJson.categoryName, categoryTax: categoryInputJson.categoryTax, categoryIdentifier: categoryInputJson.categoryIdentifier }))
     console.log(item)
   };
 
@@ -44,17 +46,19 @@ const TableComponentProducts = () => {
     console.log(item, "item")
     event.preventDefault();
     return axios.put(url, {
-      productIdentifier : item.productIdentifier,
-      productName : item.productName,
-      rate : parseInt(item.rate),
+      productIdentifier: item.productIdentifier,
+      productName: item.productName,
+      rate: parseInt(item.rate),
       categoryIdentifier: item.categoryIdentifier,
       categoryName: item.categoryName,
       categoryTax: parseInt(item.categoryTax)
     }).then(response => {
       console.log('Edited successfully', response);
-      setItem(prevItem => ({ ...prevItem,
-         categoryName: '', 
-         categoryTax: 0 }));
+      setItem(prevItem => ({
+        ...prevItem,
+        categoryName: '',
+        categoryTax: 0
+      }));
       document.getElementById('edit_product_modal').close();
       fetchProducts();
     });
@@ -71,7 +75,7 @@ const TableComponentProducts = () => {
       setItem(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
       fetchProducts();
       document.getElementById('confirm_product_delete_modal').close();
-      
+
     })
       .catch(error => {
         console.error('Error deleting:', error);
@@ -91,16 +95,16 @@ const TableComponentProducts = () => {
       document.getElementById('edit_product_modal').showModal();
       const item = event.currentTarget.getAttribute('data-item')
       const itemJson = JSON.parse(item);
-      setItem(prevItem =>({...prevItem, categoryIdentifier: item.categoryIdentifier }))
-      setItem(prevItem =>({...prevItem,productIdentifier: item.productIdentifier }))
+      setItem(prevItem => ({ ...prevItem, categoryIdentifier: item.categoryIdentifier }))
+      setItem(prevItem => ({ ...prevItem, productIdentifier: item.productIdentifier }))
       setItem(itemJson)
       console.log(item)
     }
     else if (popupName === "delete") {
       document.getElementById('confirm_product_delete_modal').showModal();
       const item = event.currentTarget.getAttribute('data-item')
-      setItem(prevItem =>({...prevItem, categoryIdentifier: item.categoryIdentifier }))
-      setItem(prevItem =>({...prevItem,productIdentifier: item.productIdentifier }))
+      setItem(prevItem => ({ ...prevItem, categoryIdentifier: item.categoryIdentifier }))
+      setItem(prevItem => ({ ...prevItem, productIdentifier: item.productIdentifier }))
       setItem(item)
     }
 
@@ -126,28 +130,11 @@ const TableComponentProducts = () => {
   ));
   return (
 
-      <div className="overflow-x-auto w-full">
-        <table className="table">
-          <thead>
-            <tr>
-              <th className='w-[3%]'>Sl.No</th>
-              <th className='w-[20%]'>Product Name</th>
-              <th className='w-[8%]'>Rate</th>
-              <th className='w-[8%]'>Tax</th>
-              <th className='w-[8%]'>Price</th>
-              <th className='w-[20%]'>Category Name</th>
-              <th className='w-[8%]'>Category Tax</th>
-              <th className='w-[10%]'>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
-      
-      
-      
-        <dialog id="edit_product_modal" className="modal">
+    <div className="overflow-x-auto w-full">
+
+      <MainTable page="Products" rows={rows}></MainTable>
+
+      <dialog id="edit_product_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Edit the details of Product</h3>
           <form>
@@ -183,7 +170,7 @@ const TableComponentProducts = () => {
             </div>
           </form>
         </div>
-      </dialog>  
+      </dialog>
 
 
       <dialog id="confirm_product_delete_modal" className="modal">
@@ -197,7 +184,7 @@ const TableComponentProducts = () => {
         </div>
       </dialog>
 
-      </div>
+    </div>
 
   )
 }

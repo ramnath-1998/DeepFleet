@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import MainTable from './MainTable';
 
 const TableComponentCategories = () => {
 
@@ -89,19 +90,8 @@ const TableComponentCategories = () => {
 
   return (
     <div className="overflow-x-auto w-full">
-      <table className="table">
-        <thead>
-          <tr>
-            <th>Sl.No</th>
-            <th>Category Name</th>
-            <th>Tax Rate</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows}
-        </tbody>
-      </table>
+
+<MainTable page="Categories" rows={rows}></MainTable>
       <dialog id="edit_category_modal" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Edit the details of category</h3>

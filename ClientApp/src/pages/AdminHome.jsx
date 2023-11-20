@@ -9,7 +9,7 @@ const AdminHome = () => {
 
     <Container 
     Menubar={<AdminHomeSideMenu></AdminHomeSideMenu>} 
-    Navbar = {<Navbar page="Category"></Navbar>}
+    Navbar = {<Navbar page="Categories"></Navbar>}
     Section = {<Table page="Categories"></Table>}
     
     />
