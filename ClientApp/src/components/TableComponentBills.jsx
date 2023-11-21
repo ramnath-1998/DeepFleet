@@ -11,8 +11,9 @@ const TableComponentBills = () => {
     const url = "/api/bills";
     const [data, setData] = useState([]);
 
-    const fetchBills = () => {
-        return axios.get(url).then((res) => setData(res.data));
+    const fetchBills = async () => {
+        const res = await axios.get(url);
+        return setData(res.data);
     };
 
     useEffect(() => {
@@ -20,7 +21,7 @@ const TableComponentBills = () => {
     }, []);
 
 
-    const [item, setItem] = useState({ billIdentifier: '', personName: '', totalPrice: '', taxAmount: '', productList: [], priceAmount: 0, billCreatedOn: "" })
+    const [item, setItem] = useState({ billIdentifier: '', personName: '', totalPrice: 0, taxAmount: 0, productList: [], priceAmount: 0, billCreatedOn: "" })
 
     const setItemAndDisplayPopup = (event) => {
 
@@ -30,15 +31,14 @@ const TableComponentBills = () => {
             document.getElementById('edit_bill_modal').showModal();
             const item = event.currentTarget.getAttribute('data-item')
             const itemJson = JSON.parse(item);
-
             setItem(prevItem => ({
                 ...prevItem,
-
+                billCreatedOn:itemJson.billCreatedOn,
                 billIdentifier: itemJson.billIdentifier,
                 personName: itemJson.personName,
                 priceAmount: parseInt(itemJson.priceAmount),
                 productList: itemJson.productList,
-                taxAmount: itemJson.taxAmount,
+                taxAmount: parseInt(itemJson.taxAmount),
                 totalPrice: parseInt(itemJson.totalPrice)
             }))
         }
@@ -49,11 +49,12 @@ const TableComponentBills = () => {
             console.log(itemJson) 
             setItem(prevItem => ({
                 ...prevItem,
+                billCreatedOn:itemJson.billCreatedOn,
                 billIdentifier: itemJson.billIdentifier,
                 personName: itemJson.personName,
                 priceAmount: parseInt(itemJson.priceAmount),
                 productList: itemJson.productList,
-                taxAmount: itemJson.taxAmount,
+                taxAmount: parseInt(itemJson.taxAmount),
                 totalPrice: parseInt(itemJson.totalPrice)
             }))
 

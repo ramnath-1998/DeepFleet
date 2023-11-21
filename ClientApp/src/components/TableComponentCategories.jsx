@@ -11,42 +11,45 @@ const TableComponentCategories = () => {
   const [item, setItem] = useState({ categoryIdentifier: '', categoryName: '', categoryTax: 0 })
   const [data, setData] = useState([]);
 
-  const fetchCategories = () => {
-    return axios.get(url).then((res) => setData(res.data));
+  const fetchCategories = async () => {
+    const res = await axios.get(url);
+    return setData(res.data);
   };
 
   useEffect(() => {
+
+
+
+
     fetchCategories();
   }, []);
 
-  const handleDeleteCategories = () => {
+  const handleDeleteCategories = async () => {
 
     console.log(item)
-    return axios.delete(url, { data: item }).then(response => {
+    try {
+      const response = await axios.delete(url, { data: item });
       console.log('Deleted successfully', response);
       setItem(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
       document.getElementById('confirm_category_delete_modal').close();
       fetchCategories();
-    })
-      .catch(error => {
-        console.error('Error deleting:', error);
-      });
+    } catch (error) {
+      console.error('Error deleting:', error);
+    }
 
   };
 
-  const handleSubmitEdit = (event) => {
+  const handleSubmitEdit = async (event) => {
     console.log(item, "item")
-    event.preventDefault();
-    return axios.put(url, {
+    const response = await axios.put(url, {
       categoryIdentifier: item.categoryIdentifier,
       categoryName: item.categoryName,
       categoryTax: parseInt(item.categoryTax)
-    }).then(response => {
-      console.log('Deleted successfully', response);
-      setItem(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
-      document.getElementById('edit_category_modal').close();
-      fetchCategories();
     });
+    console.log('Deleted successfully', response);
+    setItem(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
+    document.getElementById('edit_category_modal').close();
+    fetchCategories();
   }
 
   const setItemAndDisplayPopup = (event) => {

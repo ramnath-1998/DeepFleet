@@ -9,7 +9,7 @@ const BillsHome = () => {
   return (
     <Container 
         Menubar={<AdminHomeSideMenu></AdminHomeSideMenu>} 
-        Navbar = {<Navbar page="Product"></Navbar>}
+        Navbar = {<Navbar></Navbar>}
         Section = {<BillsSection table={<Table page="Bills"></Table>}/>}
     />
   )

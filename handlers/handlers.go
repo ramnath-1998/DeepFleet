@@ -25,8 +25,9 @@ var product2 = models.Product{Identifier: uuid.NewString(), ProductName: "Salt",
 var product3 = models.Product{Identifier: uuid.NewString(), ProductName: "Laptop", Rate: 50, Category: category2}
 var product4 = models.Product{Identifier: uuid.NewString(), ProductName: "Mobile", Rate: 50, Category: category2}
 
-var bill1 = models.Bill{PersonName: "Ramnath", ProductList: []models.Product{product1, product2}, BillCreatedOn: utils.GetCurrentTimeAsString()}
-var bill2 = models.Bill{PersonName: "Ajay", ProductList: []models.Product{product3, product4}, BillCreatedOn: utils.GetCurrentTimeAsString()}
+var bill1 = models.Bill{PersonName: "Ramnath", ProductList: []models.Product{product1, product2}, BillCreatedOn: utils.GetCurrentTimeAsString(), TotalTaxAmount: 101, TotalPriceAmount: 620, TotalPrice: 1510}
+
+var bill2 = models.Bill{PersonName: "Ajay", ProductList: []models.Product{product3, product4}, BillCreatedOn: "2006-01-02 15:04:05", TotalTaxAmount: 10, TotalPriceAmount: 60, TotalPrice: 500}
 
 var CategoryList = []models.Category{category1, category2}
 var ProductList = []models.Product{product1, product2, product3, product4}

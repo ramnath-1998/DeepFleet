@@ -4,22 +4,38 @@ import Table from './Table';
 
 function Navbar(props) {
   const url = "/api/categories";
+  const productUrl = "/api/products";
   const [categories, setCategories] = useState([]);
   const [itemCategory, setItemCategory] = useState({ categoryName: '', categoryTax: "" })
-  const [itemProduct, setItemProduct] = useState({ productName: '', rate: "", categoryIdentifier:"", categoryName:"", categoryTax:0} )
+  const [itemProduct, setItemProduct] = useState({ productName: '', rate: 0, categoryIdentifier: "", categoryName: "", categoryTax: 0 })
 
-  const fetchCategories = () => {
-    return axios.get(url).then((res) => setCategories(res.data));
+
+
+  const fetchCategories = async () => {
+    const res = await axios.get(url);
+    return setCategories(res.data);
+  };
+
+  const fetchProducts = async () => {
+    const res = await axios.get(productUrl);
+    return setCategories(res.data);
   };
 
 
-  const  handleSelectProductCategory = (event) => {
+  useEffect(() => {
+
+    fetchCategories();
+    fetchProducts();
+  });
+
+
+  const handleSelectProductCategory = (event) => {
 
     const categoryInput = event.currentTarget.getAttribute('category-data');
     const categoryInputJson = JSON.parse(categoryInput)
-    setItemProduct(prevItem => ({...prevItem, categoryName:categoryInputJson.categoryName, categoryTax:categoryInputJson.categoryTax, categoryIdentifier: categoryInputJson.categoryIdentifier}))
+    setItemProduct(prevItem => ({ ...prevItem, categoryName: categoryInputJson.categoryName, categoryTax: categoryInputJson.categoryTax, categoryIdentifier: categoryInputJson.categoryIdentifier }))
 
-  
+
   };
 
   const dropdown = categories && categories.map((category, index) => (
@@ -34,10 +50,9 @@ function Navbar(props) {
     if (popupName === "Categories") {
       document.getElementById('add_category_model').showModal();
     }
-    if (popupName === "Products") {
+    else if (popupName === "Products") {
       document.getElementById('add_product_model').showModal();
     }
-
   };
 
   const handleSubmitCategories = (event) => {
@@ -48,18 +63,41 @@ function Navbar(props) {
       categoryName: itemCategory.categoryName,
       categoryTax: parseInt(itemCategory.categoryTax)
     }).then(response => {
-      console.log('Deleted successfully', response);
+      console.log('Submitted successfully', response);
       setItemCategory(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
       document.getElementById('add_category_model').close();
-      fetchCategories();
+      window.location.reload();
     });
 
 
   };
 
+
+
   const handleSubmitProduct = (event) => {
 
+    event.preventDefault();
+    return axios.post(productUrl,
+      { productName: itemProduct.productName, rate: parseInt(itemProduct.rate), categoryIdentifier: itemProduct.categoryIdentifier, categoryName: itemProduct.categoryName, categoryTax: parseInt(itemProduct.categoryTax) }
+    ).then(response => {
+      console.log('Submitted successfully', response);
+      setItemCategory(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
+      document.getElementById('add_product_model').close();
+    })
   };
+
+  const displayAddButton = () => {
+
+    if (props.page === "Categories" || props.page === "Products") {
+      return (
+        <div className="navbar-end">
+          <button onClick={displayPopup} className="btn">Add {props.page}</button>
+        </div>
+      )
+    }
+  };
+
+
 
   return (
     <>
@@ -68,9 +106,9 @@ function Navbar(props) {
           <div className="navbar-start">
             <a className="btn btn-ghost text-xl">Admin Dashboard</a>
           </div>
-          <div className="navbar-end">
-            <button onClick={displayPopup} className="btn">Add {props.page}</button>
-          </div>
+
+          {displayAddButton()}
+
           <div className="navbar-end">
             <a href="/user" className="btn">Switch to User Account</a>
           </div>
@@ -132,7 +170,7 @@ function Navbar(props) {
             </details>
 
             <div className="modal-action">
-              <input type='submit' className="btn" placeholder="Save" />
+              <input type='submit' onClick={handleSubmitProduct} className="btn" placeholder="Save" />
               <button className="btn" onClick={() => document.getElementById('add_category_model').close()}>Close</button>
             </div>
           </form>

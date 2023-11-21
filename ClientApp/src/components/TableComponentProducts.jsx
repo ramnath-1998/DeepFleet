@@ -11,17 +11,25 @@ const TableComponentProducts = () => {
   const [data, setData] = useState([]);
   const [item, setItem] = useState({ productIdentifier: "", productName: "", rate: 0, categoryIdentifier: "", categoryName: "", categoryTax: 0 })
 
-  const fetchProducts = () => {
-    return axios.get(url).then((res) => setData(res.data));
-  };
+
 
   const [categories, setCategories] = useState([]);
 
-  const fetchCategories = () => {
-    return axios.get(categoryUrl).then((res) => setCategories(res.data));
+  const fetchProducts = async () => {
+    const res = await axios.get(url);
+    return setData(res.data);
+  };
+
+
+  const fetchCategories = async () => {
+    const res = await axios.get(categoryUrl);
+    return setCategories(res.data);
   };
 
   useEffect(() => {
+
+
+
     fetchProducts();
     fetchCategories();
   }, []);
@@ -44,7 +52,6 @@ const TableComponentProducts = () => {
   const handleSubmitEditProduct = () => {
 
     console.log(item, "item")
-    event.preventDefault();
     return axios.put(url, {
       productIdentifier: item.productIdentifier,
       productName: item.productName,
@@ -59,8 +66,9 @@ const TableComponentProducts = () => {
         categoryName: '',
         categoryTax: 0
       }));
-      document.getElementById('edit_product_modal').close();
       fetchProducts();
+      document.getElementById('edit_product_modal').close();
+
     });
   };
 
@@ -76,6 +84,7 @@ const TableComponentProducts = () => {
       fetchProducts();
       document.getElementById('confirm_product_delete_modal').close();
 
+
     })
       .catch(error => {
         console.error('Error deleting:', error);
@@ -84,9 +93,6 @@ const TableComponentProducts = () => {
   };
 
 
-  useEffect(() => {
-    fetchProducts();
-  }, []);
   const setItemAndDisplayPopup = (event) => {
 
     const popupName = event.currentTarget.getAttribute('popup-name')
@@ -108,7 +114,6 @@ const TableComponentProducts = () => {
       setItem(item)
     }
 
-    event.preventDefault();
 
   };
   const rows = data.map((item, index) => (
