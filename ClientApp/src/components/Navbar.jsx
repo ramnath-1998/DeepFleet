@@ -74,16 +74,13 @@ function Navbar(props) {
 
 
 
-  const handleSubmitProduct = (event) => {
-
-    event.preventDefault();
-    return axios.post(productUrl,
+  const handleSubmitProduct = async () => {
+    const response = await axios.post(productUrl,
       { productName: itemProduct.productName, rate: parseInt(itemProduct.rate), categoryIdentifier: itemProduct.categoryIdentifier, categoryName: itemProduct.categoryName, categoryTax: parseInt(itemProduct.categoryTax) }
-    ).then(response => {
-      console.log('Submitted successfully', response);
-      setItemCategory(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
-      document.getElementById('add_product_model').close();
-    })
+    );
+    console.log('Submitted successfully', response);
+    setItemCategory(prevItem => ({ ...prevItem, categoryName: '', categoryTax: 0 }));
+    document.getElementById('add_product_model').close();
   };
 
   const displayAddButton = () => {
@@ -144,7 +141,7 @@ function Navbar(props) {
       <dialog id="add_product_model" className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Add new product</h3>
-          <form onSubmit={handleSubmitProduct}>
+          <form>
             <input
               type="text"
               placeholder="Product Name"
