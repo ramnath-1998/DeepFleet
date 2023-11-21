@@ -26,7 +26,7 @@ function Navbar(props) {
 
     fetchCategories();
     fetchProducts();
-  },[]);
+  }, []);
 
 
   const handleSelectProductCategory = (event) => {
@@ -95,19 +95,58 @@ function Navbar(props) {
   };
 
 
+  const displaySwitchToButton = () => {
+
+    if (props.page === "Categories" || props.page === "Products") {
+      return (
+        <div className="navbar-end">
+          <a href="/user" className="btn">Switch to User Account</a>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="navbar-end">
+          <a href="/admin" className="btn">Switch to Admin Account</a>
+        </div>
+      )
+    }
+
+  };
+
+
+
+  const displayDashboardLabel = () => {
+
+    if (props.page === "Categories" || props.page === "Products") {
+      return (
+        <div className="navbar-start">
+          <a className="btn btn-ghost text-xl">Admin Dashboard</a>
+        </div>
+      )
+    }
+    else {
+      return (
+        <div className="navbar-start">
+          <a className="btn btn-ghost text-xl">User Dashboard </a>
+        </div>
+      )
+    }
+
+  };
+
+
 
   return (
     <>
       <div className="fixed w-[90%] items-center top-5">
         <div className="flex w-full justify-between  navbar bg-base-100">
-          <div className="navbar-start">
-            <a className="btn btn-ghost text-xl">Admin Dashboard</a>
-          </div>
+          {displayDashboardLabel()}
 
           {displayAddButton()}
 
           <div className="navbar-end">
-            <a href="/user" className="btn">Switch to User Account</a>
+            {displaySwitchToButton()}
           </div>
         </div>
       </div>
@@ -158,7 +197,7 @@ function Navbar(props) {
             />
 
             <details className="flex dropdown">
-              <summary className="m-1 btn mt-[10%]">{itemProduct.categoryName === "" ? "Select the Category" : itemProduct.categoryName }</summary>
+              <summary className="m-1 btn mt-[10%]">{itemProduct.categoryName === "" ? "Select the Category" : itemProduct.categoryName}</summary>
               <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
 
                 {dropdown}

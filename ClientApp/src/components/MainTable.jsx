@@ -41,7 +41,7 @@ function MainTable(props) {
     } else{
         
         return (
-            <table className="table">
+            <table className="flex table">
                 <thead>
                     <tr>
                         <th className='w-[3%]'>Sl.No</th>

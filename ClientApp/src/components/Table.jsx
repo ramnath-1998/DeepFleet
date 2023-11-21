@@ -2,6 +2,7 @@ import React from 'react'
 import TableComponentCategories from './TableComponentCategories'
 import TableComponentProducts from './TableComponentProducts'
 import TableComponentBills from './TableComponentBills'
+import TableComponentUserBills from './TableComponentUserBills'
 
 function Table(props) {
   const item = props.page
@@ -26,13 +27,23 @@ function Table(props) {
     )
   }
 
-  else {
+  else if (item === "User"){
     return (
       <div className="flex w-[70%] mt-[10%] items-center">
-        <TableComponentCategories />
+         <TableComponentBills></TableComponentBills>
       </div>
     )
   }
+
+  else if (item === "UserBill"){
+    return (
+      <div className="flex w-[70%] mt-[10%] items-center">
+         <TableComponentUserBills></TableComponentUserBills>
+      </div>
+    )
+  }
+
+
 }
 
 export default Table

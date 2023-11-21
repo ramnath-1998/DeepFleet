@@ -9,6 +9,7 @@ import AdminHome from './pages/AdminHome';
 import UserHome from './pages/UserHome';
 import ProductsHome from './pages/ProductsHome';
 import BillsHome from './pages/BillsHome';
+import UserBillHome from './pages/UserBillHome';
 function App() {
   const router = createBrowserRouter([
     {
@@ -37,9 +38,10 @@ function App() {
       element: <BillsHome></BillsHome>,
     },
     {
-      path: "/user/bills",
-      element: <BillsHome></BillsHome>,
+      path: "/user/bill",
+      element: <UserBillHome></UserBillHome>,
     },
+
   ]);
   
   return (

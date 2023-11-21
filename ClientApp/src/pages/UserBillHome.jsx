@@ -3,15 +3,14 @@ import Container from '../layout/Container'
 import Navbar from '../components/Navbar'
 import Table from '../components/Table'
 import UserHomeSideMenu from '../components/UserHomeSideMenu'
-
-const UserHome = () => {
+const UserBillHome = () => {
   return (
     <Container 
     Menubar={<UserHomeSideMenu></UserHomeSideMenu>} 
     Navbar = {<Navbar page="User"></Navbar>}
-    Section = {<Table page="User"></Table>}
+    Section = {<Table page="UserBill"></Table>}
     />
   )
 }
 
-export default UserHome
+export default UserBillHome
