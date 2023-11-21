@@ -26,7 +26,7 @@ function BillsSection(props) {
 
         fetchBills();
 
-    });
+    },[]);
 
 
 

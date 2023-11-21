@@ -26,7 +26,7 @@ function Navbar(props) {
 
     fetchCategories();
     fetchProducts();
-  });
+  },[]);
 
 
   const handleSelectProductCategory = (event) => {
@@ -161,7 +161,7 @@ function Navbar(props) {
             />
 
             <details className="flex dropdown">
-              <summary className="m-1 btn mt-[10%]">Select the category</summary>
+              <summary className="m-1 btn mt-[10%]">{itemProduct.categoryName === "" ? "Select the Category" : itemProduct.categoryName }</summary>
               <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
 
                 {dropdown}

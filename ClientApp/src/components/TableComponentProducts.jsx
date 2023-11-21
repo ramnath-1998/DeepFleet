@@ -158,14 +158,13 @@ const TableComponentProducts = () => {
             {item && data && categories && (
 
               <details className="flex dropdown">
-                <summary className="m-1 btn mt-[10%]">Select the category</summary>
+                <summary className="m-1 btn mt-[10%]">{item.categoryName === "" ? "Select the Category" : item.categoryName }</summary>
                 <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
 
                   {dropdown}
 
                 </ul>
               </details>
-
 
             )}
 

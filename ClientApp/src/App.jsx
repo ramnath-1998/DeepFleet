@@ -36,6 +36,10 @@ function App() {
       path: "/admin/bills",
       element: <BillsHome></BillsHome>,
     },
+    {
+      path: "/user/bills",
+      element: <BillsHome></BillsHome>,
+    },
   ]);
   
   return (
