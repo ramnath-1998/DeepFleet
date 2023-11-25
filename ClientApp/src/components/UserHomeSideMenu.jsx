@@ -10,8 +10,7 @@ const UserHomeSideMenu = () => {
     
     SideMenu = {<UserHomeSideMenuComponent/>}
     Navbar = {<Navbar page="User"></Navbar>}
-    AddProduct = {<UserHomeAddProductComponent></UserHomeAddProductComponent> }
-    
+
     />
   )
 }

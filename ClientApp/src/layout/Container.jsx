@@ -2,7 +2,7 @@ import React from 'react'
 
 function Container(props){
   return (
-    <div className="flex w-full justify-center items-start h-[100%]">
+    <div className="flex w-full justify-center items-start h-[300px]">
       
      {props.Navbar}
      {props.Menubar}

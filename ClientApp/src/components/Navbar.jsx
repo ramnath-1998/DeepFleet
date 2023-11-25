@@ -97,7 +97,7 @@ function Navbar(props) {
 
   const displaySwitchToButton = () => {
 
-    if (props.page === "Categories" || props.page === "Products") {
+    if (props.page === "Categories" || props.page === "Products" || props.page === "Bills") {
       return (
         <div className="navbar-end">
           <a href="/user" className="btn">Switch to User Account</a>
@@ -118,7 +118,7 @@ function Navbar(props) {
 
   const displayDashboardLabel = () => {
 
-    if (props.page === "Categories" || props.page === "Products") {
+    if (props.page === "Categories" || props.page === "Products" || props.page == "Bills") {
       return (
         <div className="navbar-start">
           <a className="btn btn-ghost text-xl">Admin Dashboard</a>

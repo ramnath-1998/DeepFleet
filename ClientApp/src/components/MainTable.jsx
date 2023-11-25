@@ -48,10 +48,8 @@ function MainTable(props) {
                         <th className='w-[20%]'>Product Name</th>
                         <th className='w-[8%]'>Rate</th>
                         <th className='w-[8%]'>Tax</th>
-                        <th className='w-[8%]'>Price</th>
-                        <th className='w-[20%]'>Category Name</th>
                         <th className='w-[8%]'>Category Tax</th>
-                        <th className='w-[10%]'>Actions</th>
+                        <th className='w-[8%]'>Price</th>
                     </tr>
                 </thead>
                 <tbody>
